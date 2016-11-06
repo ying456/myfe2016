@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>轮播图</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        img{
+            border: 0;          /*样式重置*/
+            width: 288px;
+            height: 512px;
+        }
+        #container{
+            width: 288px;
+            height: 512px;
+            margin: 50px auto;
+            position: relative;
+        }
+        #nav li,#arrows span{
+            float: left;
+            width: 20px;
+            height: 20px;
+            background: #000;
+            color: #fff;
+            margin-right: 10px;
+            text-align: center;
+            line-height: 20px;
+            cursor: pointer;
+        }
+        #nav li.selected {
+            background: orange;
+        }
+        #tab img{
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        #nav{
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+            z-index: 9999;
+        }
+        #tab{
+            position: relative;
+        }
+        #arrows{
+            position: absolute;
+            left: 10px;
+            bottom: 5px;
+            z-index: 9999;
+        }
+
+    </style>
+</head>
+<body>
+<div id="container">
+    <ul id="nav">
+        <li class="selected">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+    <div id="tab">
+        <img class="selected" src="Image/1.jpg.png">
+        <img src="Image/2.jpg.png">
+        <img src="Image/3.jpg.png">
+        <img src="Image/4.jpg.png">
+    </div>
+    <div id="arrows">
+        <span id="prev">&lt</span>
+        <span id="next">&gt</span>
+    </div>
+</div>
+<script src="jslib.js"></script>
+<script>
+    var oContainer =document.getElementById ('container');
+    var oNav = document.getElementById ('nav');
+    var aLi =oNav.getElementsByTagName ('li');
+    var oTab = document.getElementById ('tab');
+    var aImg = oTab .getElementsByTagName ('img');
+    var oPrev = document.getElementById ('prev');
+    var oNext = document.getElementById ('next');
+    var iNow = 0; //代表正在显示的图片的索引
+    var zIndex = 4;
+    for(var i=0;i<aLi .length ;i++) {
+        aImg[i].style.zIndex = aImg.length - i;
+        aLi[i].index = i;
+        aLi[i].onmouseover = function () {
+            iNow = this.index;
+            changeImg(this.index);
+        };
+    }
+    oPrev.onclick = function (){
+        iNow --;
+        iNow =(iNow + aLi.length ) % aLi.length ;
+        changeImg (iNow );
+    };
+    oNext.onclick = function (){
+        iNow++;
+        iNow = iNow % aLi.length ;
+        changeImg (iNow);
+    };
+    function changeImg(idx){
+        for(var i=0; i<aLi.length; i++){
+            aLi[i].className = '';
+        }
+        aLi[idx].className = 'selected';
+
+        var oImg = aImg[idx];
+        oImg.style.opacity = 0;
+        oImg.style.filter = "alpha(opacity=0)";
+        oImg.style.zIndex = ++zIndex;
+
+        animate(oImg, {opacity: 100});
+    }
+    var timer;
+    function run(){
+        timer = setInterval (function (){
+            oNext.onclick ();
+        },2000);//  2秒
+    }
+    run();
+    oContainer.onmouseover = function(){
+        clearInterval (timer);
+    };
+    oContainer.onmouseout = function (){
+        run();
+    };
+
+
+
+</script>
+</body>
+</html>
