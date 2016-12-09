@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>太极</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #container {
+            width: 420px;
+            height: 420px;
+            margin: 100px auto;
+            position: relative;
+        }
+        #container .big {
+            width: 210px;
+            height: 420px;
+            border: 2px solid #000;
+            border-right: 212px solid #000;
+            border-radius: 50%;
+        }
+        #container .up  {
+            width: 10px;
+            height: 10px;
+            border: 100px solid #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 100px;
+
+        }
+        #container .under {
+            background: #000000;
+            width: 10px;
+            height: 10px;
+            border: 100px solid #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 210px;
+            left: 100px;
+
+        }
+    </style>
+</head>
+    <body>
+        <div id="container">
+            <div class="circle big"></div>
+            <div class="circle up"></div>
+            <div class="circle under"></div>
+        </div>
+    </body>
+</html>
